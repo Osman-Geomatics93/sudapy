@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import warnings
 
-import geopandas as gpd
 import pytest
-from shapely.geometry import Polygon, box
 
-from sudapy.vector.ops import (
+gpd = pytest.importorskip("geopandas", reason="geopandas not installed (needs sudapy[geo])")
+from shapely.geometry import Polygon, box  # noqa: E402
+
+from sudapy.vector.ops import (  # noqa: E402
     buffer,
     calculate_area,
     fix_geometry,
