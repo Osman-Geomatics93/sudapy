@@ -176,16 +176,25 @@ jobs:
         with:
           path: artifacts/
 
-      - name: Create GitHub Release
+      - name: Create or update GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ github.ref_name }}" \
-            --title "SudaPy ${{ github.ref_name }}" \
-            --generate-notes \
-            artifacts/dist/*.whl \
-            artifacts/dist/*.tar.gz \
-            artifacts/windows-bundle/SudaPy-Windows-x64.zip
+          if gh release view "${{ github.ref_name }}" > /dev/null 2>&1; then
+            echo "Release ${{ github.ref_name }} already exists, uploading assets..."
+            gh release upload "${{ github.ref_name }}" \
+              artifacts/dist/*.whl \
+              artifacts/dist/*.tar.gz \
+              artifacts/windows-bundle/SudaPy-Windows-x64.zip \
+              --clobber
+          else
+            gh release create "${{ github.ref_name }}" \
+              --title "SudaPy ${{ github.ref_name }}" \
+              --generate-notes \
+              artifacts/dist/*.whl \
+              artifacts/dist/*.tar.gz \
+              artifacts/windows-bundle/SudaPy-Windows-x64.zip
+          fi
 
       - uses: actions/setup-python@v5
         with:
