@@ -8,10 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Union
 
-import geopandas as gpd
-import rasterio
-
-from sudapy.core.errors import DependencyError, FileFormatError, check_import
+from sudapy.core.errors import DependencyError, FileFormatError, check_import, require_extra
 from sudapy.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -71,9 +68,11 @@ def _export_static(src: Path, out: Path, *, title: str | None = None) -> Path:
     fig, ax = plt.subplots(1, 1, figsize=(10, 10))
 
     if _is_vector(src):
+        gpd = require_extra("geopandas", "geo")
         gdf = gpd.read_file(src)
         gdf.plot(ax=ax, edgecolor="black", linewidth=0.5)
     elif _is_raster(src):
+        rasterio = require_extra("rasterio", "geo")
         with rasterio.open(src) as ds:
             from rasterio.plot import show
 
@@ -97,6 +96,7 @@ def _export_html(src: Path, out: Path, *, title: str | None = None) -> Path:
     import folium
 
     if _is_vector(src):
+        gpd = require_extra("geopandas", "geo")
         gdf = gpd.read_file(src)
         gdf_wgs = gdf.to_crs(4326)
         bounds = gdf_wgs.total_bounds  # minx, miny, maxx, maxy
@@ -111,6 +111,7 @@ def _export_html(src: Path, out: Path, *, title: str | None = None) -> Path:
         m.save(str(out))
     elif _is_raster(src):
         # For raster HTML, create a simple bounds overlay
+        rasterio = require_extra("rasterio", "geo")
         with rasterio.open(src) as ds:
             from pyproj import Transformer
 

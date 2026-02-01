@@ -41,3 +41,29 @@ def check_import(module: str, extra: str = "") -> None:
             f"Missing dependency: {module}",
             hint=hint,
         ) from exc
+
+
+def require_extra(module: str, extra: str = "") -> object:
+    """Import *module* or raise :class:`DependencyError` with install hint.
+
+    Unlike :func:`check_import`, this returns the imported module object so
+    callers can use it inline::
+
+        gpd = require_extra("geopandas", "geo")
+        gdf = gpd.read_file(path)
+
+    Args:
+        module: Top-level module name (e.g. ``"geopandas"``).
+        extra: The pip extra that provides this module (e.g. ``"geo"``).
+
+    Returns:
+        The imported module object.
+    """
+    try:
+        return __import__(module)
+    except ImportError as exc:
+        hint = f'pip install "sudapy[{extra}]"' if extra else f"pip install {module}"
+        raise DependencyError(
+            f"Missing optional dependency: {module}",
+            hint=hint,
+        ) from exc

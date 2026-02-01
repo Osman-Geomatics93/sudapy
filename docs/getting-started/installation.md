@@ -3,28 +3,42 @@
 ## Requirements
 
 - Python 3.9 or later
-- GDAL (provided automatically by `rasterio` and `fiona`)
+- GDAL C libraries are **only** needed for vector/raster operations (the `[geo]` extra)
 
 !!! tip "Windows users"
-    Geospatial C libraries (GDAL, PROJ, GEOS) can be difficult to compile from source on Windows. Using **conda** to install binary dependencies first is strongly recommended.
+    The core `pip install sudapy` works everywhere -- no GDAL needed. For vector/raster support, install the `[geo]` extra. If `pip install "sudapy[geo]"` fails on Windows, use **conda** to install binary dependencies first (see below).
 
 ## From PyPI
 
 ```bash
-# Core toolkit
+# Core (CRS tools, CLI scaffolding, doctor) -- works everywhere
 pip install sudapy
 
-# With visualization extras (matplotlib, folium, contextily)
+# Core + vector/raster operations (needs GDAL C libraries)
+pip install "sudapy[geo]"
+
+# Core + geo + visualization (matplotlib, folium, contextily)
 pip install "sudapy[viz]"
 
 # With remote-sensing extras (earthpy, sentinelsat)
 pip install "sudapy[rs]"
 
-# Everything
+# Everything (geo + viz + rs)
 pip install "sudapy[all]"
 ```
 
-## Using conda (recommended for Windows)
+### What works without `[geo]`
+
+After `pip install sudapy` (no extras), you can use:
+
+- `sudapy crs list` / `sudapy crs suggest` -- CRS tools
+- `sudapy doctor` / `sudapy info` -- environment diagnostics
+- `sudapy init` -- project scaffolding
+- Python API: `from sudapy.crs.registry import suggest_utm_zone`
+
+Vector, raster, visualization, and reporting commands require `pip install "sudapy[geo]"`.
+
+## Using conda (recommended for Windows with `[geo]`)
 
 Create a clean environment with the geospatial stack, then install SudaPy on top:
 
@@ -32,7 +46,7 @@ Create a clean environment with the geospatial stack, then install SudaPy on top
 conda create -n sudapy python=3.11
 conda activate sudapy
 conda install -c conda-forge geopandas rasterio fiona pyproj shapely
-pip install sudapy
+pip install "sudapy[all]"
 ```
 
 A ready-made `environment.yml` is included in the repository:
@@ -52,26 +66,25 @@ After installing, run the built-in diagnostics:
 sudapy doctor
 ```
 
-This checks Python version, core imports (geopandas, shapely, pyproj, rasterio, fiona), PROJ data availability, and GeoPackage read/write support.
+This checks Python version, core imports (pyproj, pandas), and optionally geo imports (geopandas, shapely, rasterio, fiona). Missing optional dependencies show as `SKIP` (yellow) rather than `FAIL`.
 
-Expected output when everything is working:
+Expected output with core-only install:
 
 ```
-┌──────────────────────────────────────────────────┐
-│                  SudaPy Doctor                   │
-├─────────────────────┬────────┬───────────────────┤
-│ Check               │ Status │ Details           │
-├─────────────────────┼────────┼───────────────────┤
-│ Python >= 3.9       │ PASS   │ 3.11.x            │
-│ geopandas import    │ PASS   │ OK                │
-│ shapely import      │ PASS   │ OK                │
-│ pyproj import       │ PASS   │ OK                │
-│ rasterio import     │ PASS   │ OK (GDAL x.y.z)   │
-│ fiona import        │ PASS   │ OK                │
-│ PROJ data available │ PASS   │ OK (WGS 84 ...)   │
-│ GeoPackage r/w      │ PASS   │ OK                │
-└─────────────────────┴────────┴───────────────────┘
-All checks passed. SudaPy is ready.
+┌──────────────────────────────────────────────────────────┐
+│                      SudaPy Doctor                       │
+├───────────────────────────────┬────────┬─────────────────┤
+│ Check                         │ Status │ Details         │
+├───────────────────────────────┼────────┼─────────────────┤
+│ Python >= 3.9                 │ PASS   │ 3.11.x          │
+│ pyproj import                 │ PASS   │ OK              │
+│ pandas import                 │ PASS   │ OK              │
+│ PROJ data available           │ PASS   │ OK (WGS 84 ..) │
+│ geopandas import (optional)   │ SKIP   │ not installed   │
+│ shapely import (optional)     │ SKIP   │ not installed   │
+│ ...                           │        │                 │
+└───────────────────────────────┴────────┴─────────────────┘
+Core checks passed. Install geo extras for vector/raster support: pip install "sudapy[geo]"
 ```
 
 ## Development install
@@ -90,7 +103,8 @@ ruff check src/ tests/
 
 | Extra | Packages added | Use case |
 |-------|---------------|----------|
-| `viz` | matplotlib, folium, contextily | Map visualization (PNG/HTML) |
+| `geo` | geopandas, shapely, fiona, rasterio, numpy | Vector/raster operations (needs GDAL) |
+| `viz` | `geo` + matplotlib, folium, contextily | Map visualization (PNG/HTML) |
 | `rs` | earthpy, sentinelsat | Sentinel satellite search & download |
-| `all` | `viz` + `rs` | Everything |
+| `all` | `geo` + `viz` + `rs` | Everything |
 | `dev` | pytest, pytest-cov, ruff, mypy | Development & testing |

@@ -10,11 +10,7 @@ import warnings
 from pathlib import Path
 from typing import Union
 
-import geopandas as gpd
-from pyproj import CRS
-from shapely.validation import make_valid
-
-from sudapy.core.errors import CRSError, FileFormatError, SudaPyError
+from sudapy.core.errors import CRSError, FileFormatError, SudaPyError, require_extra
 from sudapy.core.logging import get_logger
 from sudapy.crs.registry import validate_epsg
 
@@ -31,7 +27,8 @@ _DRIVERS: dict[str, str] = {
 }
 
 
-def _read(path: PathLike) -> gpd.GeoDataFrame:
+def _read(path: PathLike):
+    gpd = require_extra("geopandas", "geo")
     path = Path(path)
     if not path.exists():
         raise FileFormatError(f"File not found: {path}")
@@ -44,7 +41,7 @@ def _read(path: PathLike) -> gpd.GeoDataFrame:
         ) from exc
 
 
-def _write(gdf: gpd.GeoDataFrame, path: PathLike) -> Path:
+def _write(gdf, path: PathLike) -> Path:
     path = Path(path)
     suffix = path.suffix.lower()
     driver = _DRIVERS.get(suffix)
@@ -59,7 +56,7 @@ def _write(gdf: gpd.GeoDataFrame, path: PathLike) -> Path:
     return path
 
 
-def _ensure_projected(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+def _ensure_projected(gdf):
     """Return a projected copy if the CRS is geographic, else return as-is."""
     if gdf.crs is None:
         raise CRSError(
@@ -91,6 +88,7 @@ def reproject(
     Returns:
         Reprojected GeoDataFrame.
     """
+    gpd = require_extra("geopandas", "geo")
     gdf = _read(src) if not isinstance(src, gpd.GeoDataFrame) else src
     target_crs = validate_epsg(to_epsg)
     result = gdf.to_crs(target_crs)
@@ -114,6 +112,7 @@ def clip(
     Returns:
         Clipped GeoDataFrame.
     """
+    gpd = require_extra("geopandas", "geo")
     gdf = _read(src) if not isinstance(src, gpd.GeoDataFrame) else src
     mask = _read(clip_src) if not isinstance(clip_src, gpd.GeoDataFrame) else clip_src
 
@@ -143,6 +142,7 @@ def dissolve(
     Returns:
         Dissolved GeoDataFrame.
     """
+    gpd = require_extra("geopandas", "geo")
     gdf = _read(src) if not isinstance(src, gpd.GeoDataFrame) else src
     if by not in gdf.columns:
         raise SudaPyError(
@@ -174,6 +174,7 @@ def calculate_area(
     Returns:
         GeoDataFrame with a new area column.
     """
+    gpd = require_extra("geopandas", "geo")
     gdf = _read(src) if not isinstance(src, gpd.GeoDataFrame) else src.copy()
 
     if gdf.crs is None:
@@ -218,6 +219,7 @@ def buffer(
     Returns:
         Buffered GeoDataFrame (in original CRS).
     """
+    gpd = require_extra("geopandas", "geo")
     gdf = _read(src) if not isinstance(src, gpd.GeoDataFrame) else src
     original_crs = gdf.crs
 
@@ -264,6 +266,7 @@ def simplify(
     Returns:
         Simplified GeoDataFrame.
     """
+    gpd = require_extra("geopandas", "geo")
     gdf = _read(src) if not isinstance(src, gpd.GeoDataFrame) else src
     original_crs = gdf.crs
 
@@ -293,6 +296,9 @@ def fix_geometry(
     Returns:
         GeoDataFrame with all geometries made valid.
     """
+    gpd = require_extra("geopandas", "geo")
+    from shapely.validation import make_valid  # noqa: E402
+
     gdf = _read(src) if not isinstance(src, gpd.GeoDataFrame) else src.copy()
 
     invalid_count = int((~gdf.geometry.is_valid).sum())

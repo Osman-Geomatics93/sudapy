@@ -21,28 +21,28 @@ SudaPy is designed for Sudanese GIS professionals who need a single toolkit that
 ### From PyPI (recommended)
 
 ```bash
-# Core toolkit
+# Core (CRS tools, CLI scaffolding, doctor) -- works everywhere, no GDAL needed
 pip install sudapy
 
-# With remote-sensing extras
-pip install "sudapy[rs]"
+# Core + vector/raster operations (needs GDAL C libraries)
+pip install "sudapy[geo]"
 
-# With visualization extras
+# Core + geo + visualization (matplotlib, folium, contextily)
 pip install "sudapy[viz]"
 
-# Everything
+# Everything (geo + viz + remote sensing)
 pip install "sudapy[all]"
 ```
 
-### Using conda for geospatial dependencies
+> **Windows note:** The `[geo]` extra requires GDAL C libraries. If `pip install "sudapy[geo]"` fails, use conda to install the geospatial stack first (see below). The core `pip install sudapy` always works.
 
-Some geospatial libraries (GDAL, rasterio, fiona) can be difficult to install from pip on Windows. Using conda or mamba to install binary dependencies first is recommended:
+### Using conda for geospatial dependencies (Windows)
 
 ```bash
 conda create -n sudapy python=3.11
 conda activate sudapy
 conda install -c conda-forge geopandas rasterio fiona pyproj
-pip install sudapy
+pip install "sudapy[all]"
 ```
 
 An `environment.yml` is included in the repository for a known-good conda environment:

@@ -9,28 +9,15 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Union
 
-import numpy as np
-import rasterio
-import rasterio.mask
-from rasterio.merge import merge
-from rasterio.warp import Resampling, calculate_default_transform, reproject
-
-from sudapy.core.errors import FileFormatError, SudaPyError
+from sudapy.core.errors import FileFormatError, SudaPyError, require_extra
 from sudapy.core.logging import get_logger
 from sudapy.crs.registry import validate_epsg
-from sudapy.vector.ops import _read as read_vector
 
 logger = get_logger(__name__)
 
 PathLike = Union[str, Path]
 
 _RASTER_EXTS = {".tif", ".tiff", ".img", ".vrt"}
-
-_RESAMPLING_MAP = {
-    "nearest": Resampling.nearest,
-    "bilinear": Resampling.bilinear,
-    "cubic": Resampling.cubic,
-}
 
 
 def clip(
@@ -53,6 +40,11 @@ def clip(
     Returns:
         Path to the output raster.
     """
+    rasterio = require_extra("rasterio", "geo")
+    import rasterio.mask
+
+    from sudapy.vector.ops import _read as read_vector
+
     src = Path(src)
     out = Path(out)
     if not src.exists():
@@ -93,7 +85,7 @@ def reproject_raster(
     out: PathLike,
     to_epsg: int,
     *,
-    resampling: Resampling = Resampling.nearest,
+    resampling: str = "nearest",
 ) -> Path:
     """Reproject a raster to a new CRS.
 
@@ -101,11 +93,27 @@ def reproject_raster(
         src: Input raster path.
         out: Output raster path.
         to_epsg: Target EPSG code.
-        resampling: Resampling method.
+        resampling: Resampling method name: ``nearest``, ``bilinear``, ``cubic``.
 
     Returns:
         Path to the output raster.
     """
+    rasterio = require_extra("rasterio", "geo")
+    from rasterio.warp import Resampling, calculate_default_transform
+    from rasterio.warp import reproject as rio_reproject
+
+    _resampling_map = {
+        "nearest": Resampling.nearest,
+        "bilinear": Resampling.bilinear,
+        "cubic": Resampling.cubic,
+    }
+    resampling_method = _resampling_map.get(resampling)
+    if resampling_method is None:
+        raise SudaPyError(
+            f"Unknown resampling method '{resampling}'",
+            hint=f"Supported: {', '.join(_resampling_map.keys())}",
+        )
+
     src = Path(src)
     out = Path(out)
     if not src.exists():
@@ -129,14 +137,14 @@ def reproject_raster(
         out.parent.mkdir(parents=True, exist_ok=True)
         with rasterio.open(out, "w", **kwargs) as dst:
             for i in range(1, ds.count + 1):
-                reproject(
+                rio_reproject(
                     source=rasterio.band(ds, i),
                     destination=rasterio.band(dst, i),
                     src_transform=ds.transform,
                     src_crs=ds.crs,
                     dst_transform=transform,
                     dst_crs=dst_crs,
-                    resampling=resampling,
+                    resampling=resampling_method,
                 )
 
     logger.info("Reprojected raster written to %s", out)
@@ -160,16 +168,25 @@ def resample(
     Returns:
         Path to the output raster.
     """
+    rasterio = require_extra("rasterio", "geo")
+    from rasterio.warp import Resampling
+
+    _resampling_map = {
+        "nearest": Resampling.nearest,
+        "bilinear": Resampling.bilinear,
+        "cubic": Resampling.cubic,
+    }
+
     src = Path(src)
     out = Path(out)
     if not src.exists():
         raise FileFormatError(f"Raster not found: {src}")
 
-    resampling_method = _RESAMPLING_MAP.get(method)
+    resampling_method = _resampling_map.get(method)
     if resampling_method is None:
         raise SudaPyError(
             f"Unknown resampling method '{method}'",
-            hint=f"Supported: {', '.join(_RESAMPLING_MAP.keys())}",
+            hint=f"Supported: {', '.join(_resampling_map.keys())}",
         )
 
     with rasterio.open(src) as ds:
@@ -220,6 +237,9 @@ def mosaic(
     if not src_dir.is_dir():
         raise FileFormatError(f"Not a directory: {src_dir}")
 
+    rasterio = require_extra("rasterio", "geo")
+    from rasterio.merge import merge as rio_merge
+
     raster_files = sorted(
         f for f in src_dir.iterdir() if f.suffix.lower() in _RASTER_EXTS
     )
@@ -231,7 +251,7 @@ def mosaic(
 
     datasets = [rasterio.open(f) for f in raster_files]
     try:
-        mosaic_data, mosaic_transform = merge(datasets)
+        mosaic_data, mosaic_transform = rio_merge(datasets)
     finally:
         for ds in datasets:
             ds.close()
@@ -270,6 +290,9 @@ def hillshade(
     Returns:
         Path to the hillshade raster.
     """
+    rasterio = require_extra("rasterio", "geo")
+    np = require_extra("numpy", "geo")
+
     src = Path(src)
     out = Path(out)
     if not src.exists():
@@ -310,6 +333,9 @@ def slope(
     Returns:
         Path to the slope raster.
     """
+    rasterio = require_extra("rasterio", "geo")
+    np = require_extra("numpy", "geo")
+
     src = Path(src)
     out = Path(out)
     if not src.exists():
@@ -341,21 +367,25 @@ def slope(
 # Internal helpers for terrain analysis
 # ---------------------------------------------------------------------------
 
-def _compute_slope(dem: np.ndarray, dx: float, dy: float) -> np.ndarray:
+def _compute_slope(dem, dx: float, dy: float):
     """Compute slope in degrees using numpy gradient."""
+    import numpy as np
+
     grad_y, grad_x = np.gradient(dem, dy, dx)
     slope_rad = np.arctan(np.sqrt(grad_x**2 + grad_y**2))
     return np.degrees(slope_rad)
 
 
 def _compute_hillshade(
-    dem: np.ndarray,
+    dem,
     dx: float,
     dy: float,
     azimuth: float,
     altitude: float,
-) -> np.ndarray:
+):
     """Compute hillshade illumination values (0-255)."""
+    import numpy as np
+
     az_rad = np.radians(360.0 - azimuth + 90.0)
     alt_rad = np.radians(altitude)
 

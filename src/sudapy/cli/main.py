@@ -54,7 +54,11 @@ app.add_typer(rs_app, name="rs")
 
 def _handle_error(exc: Exception) -> None:
     """Print a rich-formatted error and exit."""
+    from sudapy.core.errors import DependencyError
+
     console.print(f"[bold red]Error:[/bold red] {exc}")
+    if isinstance(exc, DependencyError) and exc.hint:
+        console.print(f"[yellow]Install the missing extra:[/yellow] {exc.hint}")
     raise typer.Exit(code=1)
 
 
@@ -103,7 +107,8 @@ def info() -> None:
 @app.command()
 def doctor() -> None:
     """Run diagnostics to check if SudaPy's environment is healthy."""
-    checks: list[tuple[str, bool, str]] = []
+    # status can be: True (PASS), False (FAIL), or None (SKIP/optional missing)
+    checks: list[tuple[str, bool | None, str]] = []
 
     # Python version
     py_ver = sys.version_info
@@ -114,39 +119,16 @@ def doctor() -> None:
         f"{py_ver.major}.{py_ver.minor}.{py_ver.micro}" + ("" if ok else " -- upgrade to 3.9+"),
     ))
 
-    # Core imports
+    # Core imports (always required)
     for mod, label in [
-        ("geopandas", "geopandas import"),
-        ("shapely", "shapely import"),
         ("pyproj", "pyproj import"),
+        ("pandas", "pandas import"),
     ]:
         try:
             __import__(mod)
             checks.append((label, True, "OK"))
         except ImportError:
             checks.append((label, False, "not installed -- pip install sudapy"))
-
-    # rasterio + GDAL
-    try:
-        import rasterio
-        checks.append(("rasterio import", True, f"OK (GDAL {rasterio.gdal_version()})"))
-    except ImportError:
-        checks.append((
-            "rasterio import",
-            False,
-            "not installed -- conda install -c conda-forge rasterio",
-        ))
-
-    # fiona
-    try:
-        import fiona
-        checks.append(("fiona import", True, "OK"))
-    except ImportError:
-        checks.append((
-            "fiona import",
-            False,
-            "not installed -- conda install -c conda-forge fiona",
-        ))
 
     # PROJ data
     try:
@@ -156,7 +138,31 @@ def doctor() -> None:
     except Exception as exc:
         checks.append(("PROJ data available", False, str(exc)))
 
-    # GeoPackage read/write
+    # Optional geo imports (sudapy[geo])
+    for mod, label in [
+        ("geopandas", "geopandas import (optional)"),
+        ("shapely", "shapely import (optional)"),
+        ("fiona", "fiona import (optional)"),
+        ("numpy", "numpy import (optional)"),
+    ]:
+        try:
+            __import__(mod)
+            checks.append((label, True, "OK"))
+        except ImportError:
+            checks.append((label, None, 'not installed -- pip install "sudapy[geo]"'))
+
+    # rasterio + GDAL (optional)
+    try:
+        import rasterio
+        checks.append(("rasterio import (optional)", True, f"OK (GDAL {rasterio.gdal_version()})"))
+    except ImportError:
+        checks.append((
+            "rasterio import (optional)",
+            None,
+            'not installed -- pip install "sudapy[geo]"',
+        ))
+
+    # GeoPackage read/write (only if geo deps available)
     try:
         import geopandas as gpd
         from shapely.geometry import Point
@@ -169,6 +175,8 @@ def doctor() -> None:
         gpd.read_file(tmp_path)
         os.unlink(tmp_path)
         checks.append(("GeoPackage read/write", True, "OK"))
+    except ImportError:
+        checks.append(("GeoPackage read/write", None, 'skipped -- install "sudapy[geo]" first'))
     except Exception as exc:
         checks.append(("GeoPackage read/write", False, str(exc)))
 
@@ -178,21 +186,27 @@ def doctor() -> None:
     table.add_column("Status")
     table.add_column("Details")
 
-    all_ok = True
+    has_fail = False
     for label, ok, detail in checks:
-        status = "[green]PASS[/green]" if ok else "[red]FAIL[/red]"
-        if not ok:
-            all_ok = False
+        if ok is True:
+            status = "[green]PASS[/green]"
+        elif ok is None:
+            status = "[yellow]SKIP[/yellow]"
+        else:
+            status = "[red]FAIL[/red]"
+            has_fail = True
         table.add_row(label, status, detail)
 
     console.print(table)
 
-    if all_ok:
-        console.print("\n[bold green]All checks passed. SudaPy is ready.[/bold green]")
+    if has_fail:
+        console.print(
+            "\n[bold red]Some core checks failed.[/bold red] See hints above."
+        )
     else:
         console.print(
-            "\n[bold yellow]Some checks failed.[/bold yellow] "
-            "See hints above. For Windows, try: conda install -c conda-forge geopandas rasterio fiona"
+            "\n[bold green]Core checks passed.[/bold green] "
+            'Install geo extras for vector/raster support: pip install "sudapy[geo]"'
         )
 
 
@@ -260,7 +274,7 @@ def report(
     try:
         import geopandas as gpd
     except ImportError:
-        _handle_error(Exception("geopandas is required. pip install sudapy"))
+        _handle_error(Exception('geopandas is required. Install with: pip install "sudapy[geo]"'))
         return
 
     try:
