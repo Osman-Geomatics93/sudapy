@@ -1,0 +1,2699 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Sudan-focused Python toolkit for Geomatics: GIS, remote sensing, and surveying workflows.">
+      
+      
+        <meta name="author" content="Osman Osama Ahmed Ibrahim">
+      
+      
+        <link rel="canonical" href="https://osman-geomatics93.github.io/sudapy/cli/">
+      
+      
+        <link rel="prev" href="../guide/remote-sensing/">
+      
+      
+        <link rel="next" href="../api/crs/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>CLI Reference - SudaPy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cli-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="SudaPy" class="md-header__button md-logo" aria-label="SudaPy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SudaPy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLI Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Osman-Geomatics93/sudapy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Osman-Geomatics93/sudapy
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../guide/crs/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../api/crs/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="SudaPy" class="md-nav__button md-logo" aria-label="SudaPy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SudaPy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Osman-Geomatics93/sudapy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Osman-Geomatics93/sudapy
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Home
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/project-init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Scaffolding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/offline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/crs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRS & Coordinate Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/vector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vector Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/raster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raster Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/remote-sensing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Sensing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Global commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy doctor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crs-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CRS commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CRS commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-crs-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy crs list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-crs-suggest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy crs suggest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-reproject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector reproject
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector clip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-dissolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector dissolve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector area
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector buffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-simplify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector simplify
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-fix-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector fix-geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raster-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raster commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Raster commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster clip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-reproject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster reproject
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-resample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster resample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-mosaic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster mosaic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-hillshade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster hillshade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-slope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster slope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Map commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Map commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-map-quick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy map quick
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-sensing-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote sensing commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remote sensing commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-rs-sentinel-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy rs sentinel-search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-rs-sentinel-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy rs sentinel-download
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/crs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sudapy.crs.registry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/vector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sudapy.vector.ops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/raster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sudapy.raster.ops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/viz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sudapy.viz.maps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/sentinel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sudapy.rs.sentinel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sudapy.core.errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Global commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy info
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy doctor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crs-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CRS commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CRS commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-crs-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy crs list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-crs-suggest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy crs suggest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-reproject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector reproject
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector clip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-dissolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector dissolve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector area
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector buffer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-simplify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector simplify
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-vector-fix-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy vector fix-geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raster-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raster commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Raster commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster clip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-reproject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster reproject
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-resample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster resample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-mosaic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster mosaic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-hillshade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster hillshade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-raster-slope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy raster slope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Map commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Map commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-map-quick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy map quick
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remote-sensing-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote sensing commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remote sensing commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-rs-sentinel-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy rs sentinel-search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudapy-rs-sentinel-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudapy rs sentinel-download
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h1>
+<p>SudaPy provides a command-line interface built with <a href="https://typer.tiangolo.com/">Typer</a>. All commands use <code>--in</code> / <code>--out</code> for input/output files.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudapy<span class="w"> </span>--help
+</span></code></pre></div>
+<h2 id="global-commands">Global commands<a class="headerlink" href="#global-commands" title="Permanent link">&para;</a></h2>
+<h3 id="sudapy-info"><code>sudapy info</code><a class="headerlink" href="#sudapy-info" title="Permanent link">&para;</a></h3>
+<p>Show SudaPy version, Python version, platform, and dependency status.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudapy<span class="w"> </span>info
+</span></code></pre></div>
+<h3 id="sudapy-doctor"><code>sudapy doctor</code><a class="headerlink" href="#sudapy-doctor" title="Permanent link">&para;</a></h3>
+<p>Run environment diagnostics: checks Python version, core imports, GDAL, PROJ data, and GeoPackage read/write.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudapy<span class="w"> </span>doctor
+</span></code></pre></div>
+<h3 id="sudapy-init"><code>sudapy init</code><a class="headerlink" href="#sudapy-init" title="Permanent link">&para;</a></h3>
+<p>Scaffold a new geomatics project with standard folder structure.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudapy<span class="w"> </span>init<span class="w"> </span>PROJECT_NAME
+</span></code></pre></div>
+<p>Creates: <code>data_raw/</code>, <code>data_clean/</code>, <code>outputs/</code>, <code>maps/</code>, <code>scripts/process.py</code>, and <code>README.md</code>.</p>
+<h3 id="sudapy-report"><code>sudapy report</code><a class="headerlink" href="#sudapy-report" title="Permanent link">&para;</a></h3>
+<p>Print a summary report for a vector dataset.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudapy<span class="w"> </span>report<span class="w"> </span>--in<span class="w"> </span>data/parcels.gpkg
+</span></code></pre></div>
+<p>Reports: feature count, columns, geometry types, CRS, bounds, null/invalid geometry count.</p>
+<h3 id="sudapy-batch"><code>sudapy batch</code><a class="headerlink" href="#sudapy-batch" title="Permanent link">&para;</a></h3>
+<p>Run an operation on all vector files in a directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudapy<span class="w"> </span>batch<span class="w"> </span>OPERATION<span class="w"> </span>--in<span class="w"> </span>INPUT_DIR<span class="w"> </span>--out<span class="w"> </span>OUTPUT_DIR<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div>
+<p>Operations: <code>reproject</code>, <code>clip</code>, <code>buffer</code>, <code>area</code>, <code>simplify</code>, <code>fix-geometry</code>.</p>
+<p>See <a href="../guide/batch/">Batch Processing Guide</a> for details.</p>
+<hr />
+<h2 id="crs-commands">CRS commands<a class="headerlink" href="#crs-commands" title="Permanent link">&para;</a></h2>
+<h3 id="sudapy-crs-list"><code>sudapy crs list</code><a class="headerlink" href="#sudapy-crs-list" title="Permanent link">&para;</a></h3>
+<p>Show all built-in Sudan CRS presets.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudapy<span class="w"> </span>crs<span class="w"> </span>list
+</span></code></pre></div>
+<h3 id="sudapy-crs-suggest"><code>sudapy crs suggest</code><a class="headerlink" href="#sudapy-crs-suggest" title="Permanent link">&para;</a></h3>
+<p>Suggest the appropriate UTM zone for a coordinate.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudapy<span class="w"> </span>crs<span class="w"> </span>suggest<span class="w"> </span>--lon<span class="w"> </span><span class="m">32</span>.5<span class="w"> </span>--lat<span class="w"> </span><span class="m">15</span>.6
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--lon</code></td>
+<td>Yes</td>
+<td>Longitude in decimal degrees</td>
+</tr>
+<tr>
+<td><code>--lat</code></td>
+<td>Yes</td>
+<td>Latitude in decimal degrees</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vector-commands">Vector commands<a class="headerlink" href="#vector-commands" title="Permanent link">&para;</a></h2>
+<h3 id="sudapy-vector-reproject"><code>sudapy vector reproject</code><a class="headerlink" href="#sudapy-vector-reproject" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudapy<span class="w"> </span>vector<span class="w"> </span>reproject<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--out<span class="w"> </span>OUTPUT<span class="w"> </span>--to<span class="w"> </span>EPSG
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input vector file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output vector file</td>
+</tr>
+<tr>
+<td><code>--to</code></td>
+<td>Yes</td>
+<td>Target EPSG code</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-vector-clip"><code>sudapy vector clip</code><a class="headerlink" href="#sudapy-vector-clip" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudapy<span class="w"> </span>vector<span class="w"> </span>clip<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--clip<span class="w"> </span>MASK<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input vector file</td>
+</tr>
+<tr>
+<td><code>--clip</code></td>
+<td>Yes</td>
+<td>Clipping geometry file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output vector file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-vector-dissolve"><code>sudapy vector dissolve</code><a class="headerlink" href="#sudapy-vector-dissolve" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudapy<span class="w"> </span>vector<span class="w"> </span>dissolve<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--by<span class="w"> </span>FIELD<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input vector file</td>
+</tr>
+<tr>
+<td><code>--by</code></td>
+<td>Yes</td>
+<td>Field name to dissolve on</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output vector file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-vector-area"><code>sudapy vector area</code><a class="headerlink" href="#sudapy-vector-area" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudapy<span class="w"> </span>vector<span class="w"> </span>area<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--out<span class="w"> </span>OUTPUT<span class="w"> </span><span class="o">[</span>--field<span class="w"> </span>FIELD<span class="o">]</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td></td>
+<td>Input vector file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td></td>
+<td>Output vector file</td>
+</tr>
+<tr>
+<td><code>--field</code></td>
+<td>No</td>
+<td><code>area_m2</code></td>
+<td>Name for the area column</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-vector-buffer"><code>sudapy vector buffer</code><a class="headerlink" href="#sudapy-vector-buffer" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudapy<span class="w"> </span>vector<span class="w"> </span>buffer<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--distance<span class="w"> </span>METERS<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input vector file</td>
+</tr>
+<tr>
+<td><code>--distance</code></td>
+<td>Yes</td>
+<td>Buffer distance in meters</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output vector file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-vector-simplify"><code>sudapy vector simplify</code><a class="headerlink" href="#sudapy-vector-simplify" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudapy<span class="w"> </span>vector<span class="w"> </span>simplify<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--tolerance<span class="w"> </span>METERS<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input vector file</td>
+</tr>
+<tr>
+<td><code>--tolerance</code></td>
+<td>Yes</td>
+<td>Simplification tolerance in meters</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output vector file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-vector-fix-geometry"><code>sudapy vector fix-geometry</code><a class="headerlink" href="#sudapy-vector-fix-geometry" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudapy<span class="w"> </span>vector<span class="w"> </span>fix-geometry<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input vector file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output vector file</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="raster-commands">Raster commands<a class="headerlink" href="#raster-commands" title="Permanent link">&para;</a></h2>
+<h3 id="sudapy-raster-clip"><code>sudapy raster clip</code><a class="headerlink" href="#sudapy-raster-clip" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudapy<span class="w"> </span>raster<span class="w"> </span>clip<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--clip<span class="w"> </span>VECTOR<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input raster file</td>
+</tr>
+<tr>
+<td><code>--clip</code></td>
+<td>Yes</td>
+<td>Clipping vector file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output raster file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-raster-reproject"><code>sudapy raster reproject</code><a class="headerlink" href="#sudapy-raster-reproject" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudapy<span class="w"> </span>raster<span class="w"> </span>reproject<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--out<span class="w"> </span>OUTPUT<span class="w"> </span>--to<span class="w"> </span>EPSG
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input raster file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output raster file</td>
+</tr>
+<tr>
+<td><code>--to</code></td>
+<td>Yes</td>
+<td>Target EPSG code</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-raster-resample"><code>sudapy raster resample</code><a class="headerlink" href="#sudapy-raster-resample" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudapy<span class="w"> </span>raster<span class="w"> </span>resample<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--out<span class="w"> </span>OUTPUT<span class="w"> </span>--scale<span class="w"> </span>FACTOR<span class="w"> </span><span class="o">[</span>--method<span class="w"> </span>METHOD<span class="o">]</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td></td>
+<td>Input raster file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td></td>
+<td>Output raster file</td>
+</tr>
+<tr>
+<td><code>--scale</code></td>
+<td>Yes</td>
+<td></td>
+<td>Scale factor (2.0 = double resolution)</td>
+</tr>
+<tr>
+<td><code>--method</code></td>
+<td>No</td>
+<td><code>bilinear</code></td>
+<td>Resampling: <code>nearest</code>, <code>bilinear</code>, <code>cubic</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-raster-mosaic"><code>sudapy raster mosaic</code><a class="headerlink" href="#sudapy-raster-mosaic" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudapy<span class="w"> </span>raster<span class="w"> </span>mosaic<span class="w"> </span>--in<span class="w"> </span>TILE_DIR<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Directory with raster tiles</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output merged raster</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-raster-hillshade"><code>sudapy raster hillshade</code><a class="headerlink" href="#sudapy-raster-hillshade" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>sudapy<span class="w"> </span>raster<span class="w"> </span>hillshade<span class="w"> </span>--in<span class="w"> </span>DEM<span class="w"> </span>--out<span class="w"> </span>OUTPUT<span class="w"> </span><span class="o">[</span>--azimuth<span class="w"> </span>DEG<span class="o">]</span><span class="w"> </span><span class="o">[</span>--altitude<span class="w"> </span>DEG<span class="o">]</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td></td>
+<td>Input DEM raster</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td></td>
+<td>Output hillshade raster</td>
+</tr>
+<tr>
+<td><code>--azimuth</code></td>
+<td>No</td>
+<td><code>315.0</code></td>
+<td>Sun azimuth in degrees</td>
+</tr>
+<tr>
+<td><code>--altitude</code></td>
+<td>No</td>
+<td><code>45.0</code></td>
+<td>Sun altitude in degrees</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-raster-slope"><code>sudapy raster slope</code><a class="headerlink" href="#sudapy-raster-slope" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>sudapy<span class="w"> </span>raster<span class="w"> </span>slope<span class="w"> </span>--in<span class="w"> </span>DEM<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input DEM raster</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output slope raster (degrees)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="map-commands">Map commands<a class="headerlink" href="#map-commands" title="Permanent link">&para;</a></h2>
+<h3 id="sudapy-map-quick"><code>sudapy map quick</code><a class="headerlink" href="#sudapy-map-quick" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>sudapy<span class="w"> </span>map<span class="w"> </span>quick<span class="w"> </span>--in<span class="w"> </span>INPUT<span class="w"> </span>--out<span class="w"> </span>OUTPUT
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--in</code></td>
+<td>Yes</td>
+<td>Input vector or raster file</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>Yes</td>
+<td>Output <code>.png</code> (static) or <code>.html</code> (interactive)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="remote-sensing-commands">Remote sensing commands<a class="headerlink" href="#remote-sensing-commands" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Requires <code>pip install "sudapy[rs]"</code> and Copernicus credentials.</p>
+</div>
+<h3 id="sudapy-rs-sentinel-search"><code>sudapy rs sentinel-search</code><a class="headerlink" href="#sudapy-rs-sentinel-search" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudapy<span class="w"> </span>rs<span class="w"> </span>sentinel-search<span class="w"> </span>--lon<span class="w"> </span>LON<span class="w"> </span>--lat<span class="w"> </span>LAT<span class="w"> </span>--start<span class="w"> </span>DATE<span class="w"> </span>--end<span class="w"> </span>DATE<span class="w"> </span><span class="o">[</span>--platform<span class="w"> </span>NAME<span class="o">]</span><span class="w"> </span><span class="o">[</span>--max-cloud<span class="w"> </span>PCT<span class="o">]</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--lon</code></td>
+<td>Yes</td>
+<td></td>
+<td>Center longitude</td>
+</tr>
+<tr>
+<td><code>--lat</code></td>
+<td>Yes</td>
+<td></td>
+<td>Center latitude</td>
+</tr>
+<tr>
+<td><code>--start</code></td>
+<td>Yes</td>
+<td></td>
+<td>Start date (YYYY-MM-DD)</td>
+</tr>
+<tr>
+<td><code>--end</code></td>
+<td>Yes</td>
+<td></td>
+<td>End date (YYYY-MM-DD)</td>
+</tr>
+<tr>
+<td><code>--platform</code></td>
+<td>No</td>
+<td><code>Sentinel-2</code></td>
+<td>Satellite platform</td>
+</tr>
+<tr>
+<td><code>--max-cloud</code></td>
+<td>No</td>
+<td><code>30</code></td>
+<td>Max cloud cover %</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sudapy-rs-sentinel-download"><code>sudapy rs sentinel-download</code><a class="headerlink" href="#sudapy-rs-sentinel-download" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudapy<span class="w"> </span>rs<span class="w"> </span>sentinel-download<span class="w"> </span>--uuid<span class="w"> </span>UUID<span class="w"> </span><span class="o">[</span>--out<span class="w"> </span>DIR<span class="o">]</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--uuid</code></td>
+<td>Yes</td>
+<td></td>
+<td>Scene UUID from search</td>
+</tr>
+<tr>
+<td><code>--out</code></td>
+<td>No</td>
+<td><code>.</code></td>
+<td>Output directory</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../guide/remote-sensing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Remote Sensing">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Remote Sensing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../api/crs/" class="md-footer__link md-footer__link--next" aria-label="Next: sudapy.crs.registry">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                sudapy.crs.registry
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Osman Osama Ahmed Ibrahim
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Osman-Geomatics93" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/in/osman-ibrahim" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/sudapy/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.tabs.link", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
