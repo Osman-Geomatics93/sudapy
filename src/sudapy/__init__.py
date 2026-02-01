@@ -4,5 +4,5 @@ Provides GIS, remote sensing, and surveying workflows optimized
 for professionals working in Sudan and the surrounding region.
 """
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __all__ = ["__version__"]

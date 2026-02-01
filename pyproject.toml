@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sudapy"
-version = "1.0.1"
+version = "1.0.2"
 description = "Sudan-focused Python toolkit for Geomatics: GIS, remote sensing, and surveying workflows."
 readme = "README.md"
 license = "MIT"
@@ -70,7 +70,7 @@ sudapy = "sudapy.cli.main:app"
 
 [project.urls]
 Homepage = "https://github.com/Osman-Geomatics93/sudapy"
-Documentation = "https://github.com/Osman-Geomatics93/sudapy#readme"
+Documentation = "https://osman-geomatics93.github.io/sudapy/"
 Repository = "https://github.com/Osman-Geomatics93/sudapy"
 Issues = "https://github.com/Osman-Geomatics93/sudapy/issues"
 Changelog = "https://github.com/Osman-Geomatics93/sudapy/blob/main/CHANGELOG.md"
