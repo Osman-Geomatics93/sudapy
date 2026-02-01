@@ -136,26 +136,23 @@ jobs:
           pip install --no-deps .
 
       - name: Pack conda environment
-        shell: cmd /C call {0}
-        run: conda-pack -n sudapy-bundle -o sudapy_env.tar.gz --ignore-editable-packages
+        run: conda-pack -p "$MAMBA_ROOT_PREFIX/envs/sudapy-bundle" -o sudapy_env.tar.gz --ignore-editable-packages
 
-      - name: Create bundle directory
-        shell: cmd /C call {0}
+      - name: Create bundle directory and extract
         run: |
-          mkdir SudaPy-Windows-x64\scripts\sudapy_env
-          tar -xzf sudapy_env.tar.gz -C SudaPy-Windows-x64\scripts\sudapy_env
+          mkdir -p SudaPy-Windows-x64/scripts/sudapy_env
+          tar -xzf sudapy_env.tar.gz -C SudaPy-Windows-x64/scripts/sudapy_env
 
       - name: Run conda-unpack
         shell: cmd /C call {0}
         run: call SudaPy-Windows-x64\scripts\sudapy_env\Scripts\conda-unpack.exe
 
       - name: Copy bundle files
-        shell: cmd /C call {0}
         run: |
-          copy scripts\run_sudapy.bat SudaPy-Windows-x64\scripts\
-          copy scripts\sudapy_doctor.bat SudaPy-Windows-x64\scripts\
-          copy scripts\README_BUNDLE.txt SudaPy-Windows-x64\
-          copy LICENSE SudaPy-Windows-x64\
+          cp scripts/run_sudapy.bat SudaPy-Windows-x64/scripts/
+          cp scripts/sudapy_doctor.bat SudaPy-Windows-x64/scripts/
+          cp scripts/README_BUNDLE.txt SudaPy-Windows-x64/
+          cp LICENSE SudaPy-Windows-x64/
 
       - name: Create zip archive
         shell: pwsh
