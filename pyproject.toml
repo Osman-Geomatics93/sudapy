@@ -1,0 +1,98 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sudapy"
+version = "0.1.0"
+description = "Sudan-focused Python toolkit for Geomatics: GIS, remote sensing, and surveying workflows."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "Osman Osama Ahmed Ibrahim", email = "osmangeomatics93@gmail.com" },
+]
+maintainers = [
+    { name = "Osman Osama Ahmed Ibrahim", email = "osmangeomatics93@gmail.com" },
+]
+keywords = ["gis", "geomatics", "sudan", "remote-sensing", "surveying", "geospatial"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+dependencies = [
+    "geopandas>=0.14,<2",
+    "shapely>=2.0,<3",
+    "fiona>=1.9,<2",
+    "pyproj>=3.6,<4",
+    "rasterio>=1.3,<2",
+    "pandas>=2.0,<3",
+    "numpy>=1.24,<3",
+    "typer[all]>=0.9,<1",
+    "rich>=13.0,<14",
+    "pyyaml>=6.0,<7",
+    "geographiclib>=2.0,<3",
+]
+
+[project.optional-dependencies]
+rs = [
+    "earthpy>=0.9,<1",
+    "sentinelsat>=1.2,<2",
+]
+viz = [
+    "folium>=0.15,<1",
+    "matplotlib>=3.7,<4",
+    "contextily>=1.4,<2",
+]
+all = [
+    "sudapy[rs]",
+    "sudapy[viz]",
+]
+dev = [
+    "pytest>=7.0,<9",
+    "pytest-cov>=4.0,<6",
+    "ruff>=0.3,<1",
+    "mypy>=1.5,<2",
+]
+
+[project.scripts]
+sudapy = "sudapy.cli.main:app"
+
+[project.urls]
+Homepage = "https://github.com/Osman-Geomatics93/sudapy"
+Documentation = "https://github.com/Osman-Geomatics93/sudapy#readme"
+Repository = "https://github.com/Osman-Geomatics93/sudapy"
+Issues = "https://github.com/Osman-Geomatics93/sudapy/issues"
+Changelog = "https://github.com/Osman-Geomatics93/sudapy/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sudapy"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
