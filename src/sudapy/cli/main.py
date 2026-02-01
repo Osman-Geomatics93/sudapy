@@ -9,6 +9,7 @@ import os
 import platform
 import sys
 from pathlib import Path
+from typing import Optional
 
 import typer
 from rich.console import Console
@@ -107,7 +108,7 @@ def info() -> None:
 def doctor() -> None:
     """Run diagnostics to check if SudaPy's environment is healthy."""
     # status can be: True (PASS), False (FAIL), or None (SKIP/optional missing)
-    checks: list[tuple[str, bool | None, str]] = []
+    checks: list[tuple[str, Optional[bool], str]] = []
 
     # Python version
     py_ver = sys.version_info
@@ -324,11 +325,11 @@ def batch(
     ),
     input_dir: Path = typer.Option(..., "--in", help="Input directory with vector files."),
     output_dir: Path = typer.Option(..., "--out", help="Output directory."),
-    to: int | None = typer.Option(None, "--to", help="Target EPSG (for reproject)."),
-    clip_path: Path | None = typer.Option(None, "--clip", help="Clip geometry file."),
-    distance: float | None = typer.Option(None, "--distance", help="Buffer distance in meters."),
+    to: Optional[int] = typer.Option(None, "--to", help="Target EPSG (for reproject)."),
+    clip_path: Optional[Path] = typer.Option(None, "--clip", help="Clip geometry file."),
+    distance: Optional[float] = typer.Option(None, "--distance", help="Buffer distance in meters."),
     field: str = typer.Option("area_m2", "--field", help="Field name (for area)."),
-    tolerance: float | None = typer.Option(None, "--tolerance", help="Simplify tolerance in meters."),
+    tolerance: Optional[float] = typer.Option(None, "--tolerance", help="Simplify tolerance in meters."),
 ) -> None:
     """Run an operation on all vector files in a directory."""
     from sudapy.vector import ops as vops

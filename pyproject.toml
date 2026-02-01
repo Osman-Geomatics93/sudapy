@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sudapy"
-version = "1.2.0"
+version = "1.2.1"
 description = "Sudan-focused Python toolkit for Geomatics: GIS, remote sensing, and surveying workflows."
 readme = "README.md"
 license = "MIT"
@@ -97,6 +97,10 @@ src = ["src", "tests"]
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]
 ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+# Typer evaluates type hints at runtime; Optional[X] is required for Python 3.9 compat
+"src/sudapy/cli/main.py" = ["UP045"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

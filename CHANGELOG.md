@@ -5,6 +5,12 @@ All notable changes to SudaPy will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-02-02
+
+### Fixed
+
+- **Python 3.9 runtime crash:** Reverted PEP 604 union type annotations (`int | None`) back to `Optional[int]` in CLI function signatures. Typer evaluates type hints at runtime via `typing.get_type_hints()`, which fails on Python 3.9 even with `from __future__ import annotations`.
+
 ## [1.2.0] - 2026-02-02
 
 ### Added

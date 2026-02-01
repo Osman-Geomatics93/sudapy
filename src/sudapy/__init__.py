@@ -8,7 +8,7 @@ import platform
 import struct
 import warnings
 
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 __all__ = ["__version__"]
 
 if platform.system() == "Windows" and struct.calcsize("P") * 8 == 32:
