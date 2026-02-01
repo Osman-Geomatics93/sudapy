@@ -1,22 +1,127 @@
-site_name: SudaPy Documentation
-site_description: Sudan-focused Python toolkit for Geomatics
-repo_url: https://github.com/sudapy/sudapy
+site_name: SudaPy
+site_description: "Sudan-focused Python toolkit for Geomatics: GIS, remote sensing, and surveying workflows."
+site_author: Osman Osama Ahmed Ibrahim
+site_url: https://osman-geomatics93.github.io/sudapy
+repo_url: https://github.com/Osman-Geomatics93/sudapy
+repo_name: Osman-Geomatics93/sudapy
+edit_uri: edit/main/docs/
+
+copyright: Copyright &copy; 2026 Osman Osama Ahmed Ibrahim
 
 theme:
   name: material
+  language: en
   palette:
-    primary: teal
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
   features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
 
 nav:
-  - Home: index.md
-  - Installation: installation.md
-  - Quickstart: quickstart.md
+  - Home:
+      - Overview: index.md
+      - Changelog: changelog.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+      - Project Scaffolding: getting-started/project-init.md
+      - Offline Installation: getting-started/offline.md
+  - User Guide:
+      - CRS & Coordinate Systems: guide/crs.md
+      - Vector Operations: guide/vector.md
+      - Raster Operations: guide/raster.md
+      - Visualization: guide/visualization.md
+      - Batch Processing: guide/batch.md
+      - Remote Sensing: guide/remote-sensing.md
   - CLI Reference: cli.md
+  - API Reference:
+      - sudapy.crs.registry: api/crs.md
+      - sudapy.vector.ops: api/vector.md
+      - sudapy.raster.ops: api/raster.md
+      - sudapy.viz.maps: api/viz.md
+      - sudapy.rs.sentinel: api/sentinel.md
+      - sudapy.core.errors: api/errors.md
+  - Contributing: contributing.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+            heading_level: 3
+            members_order: source
+            docstring_style: google
+            show_signature_annotations: true
+            separate_signature: true
 
 markdown_extensions:
   - admonition
-  - codehilite
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
+  - attr_list
+  - md_in_html
   - toc:
       permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Osman-Geomatics93
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/osman-ibrahim
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/sudapy/
+  generator: false
