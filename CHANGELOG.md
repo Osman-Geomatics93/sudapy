@@ -5,7 +5,15 @@ All notable changes to SudaPy will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] - 2025-02-01
+## [1.0.1] - 2026-02-01
+
+### Fixed
+
+- Project URLs now point to correct GitHub repository (Osman-Geomatics93/sudapy).
+- INSTALL_OFFLINE.md link uses absolute GitHub URL (no longer 404s on PyPI).
+- Version/classifier alignment: 1.x with Production/Stable status.
+
+## [1.0.0] - 2026-02-01
 
 ### Added
 
