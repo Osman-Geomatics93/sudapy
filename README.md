@@ -18,7 +18,17 @@ SudaPy is designed for Sudanese GIS professionals who need a single toolkit that
 
 ## Installation
 
-### From PyPI (recommended)
+### Portable Windows Bundle (recommended for Windows)
+
+Download the self-contained zip from the [latest release](https://github.com/Osman-Geomatics93/sudapy/releases/latest) -- no Python, pip, conda, or Visual Studio needed:
+
+1. Download **SudaPy-Windows-x64.zip** (~600 MB)
+2. Extract to `C:\SudaPy`
+3. Run `scripts\sudapy_doctor.bat` to verify
+
+See [INSTALL_WINDOWS.md](https://github.com/Osman-Geomatics93/sudapy/blob/main/INSTALL_WINDOWS.md) for all Windows installation options.
+
+### From PyPI
 
 ```bash
 # Core (CRS tools, CLI scaffolding, doctor) -- works everywhere, no GDAL needed

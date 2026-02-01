@@ -16,6 +16,9 @@ dependencies:
   - folium>=0.15
   - contextily>=1.4
   - gdal>=3.6
+  - conda-pack
   - pip
   - pip:
       - sudapy
+      - typer[all]>=0.9
+      - rich>=13.0

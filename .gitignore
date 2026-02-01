@@ -17,3 +17,5 @@ wheelhouse/
 env/
 venv/
 site/
+SudaPy-Windows-x64/
+sudapy_env.tar.gz

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sudapy"
-version = "1.1.0"
+version = "1.2.0"
 description = "Sudan-focused Python toolkit for Geomatics: GIS, remote sensing, and surveying workflows."
 readme = "README.md"
 license = "MIT"
@@ -46,6 +46,7 @@ geo = [
     "fiona>=1.9,<2",
     "rasterio>=1.3,<2",
     "numpy>=1.24,<3",
+    "scipy>=1.10,<2",
 ]
 rs = [
     "earthpy>=0.9,<1",
@@ -61,6 +62,12 @@ all = [
     "sudapy[geo]",
     "sudapy[rs]",
     "sudapy[viz]",
+]
+docs = [
+    "mkdocs-material>=9.0,<10",
+    "mkdocstrings[python]>=0.24,<1",
+    "mkdocs-gen-files>=0.5,<1",
+    "mkdocs-literate-nav>=0.6,<1",
 ]
 dev = [
     "pytest>=7.0,<9",

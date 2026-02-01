@@ -1,83 +1,68 @@
 # Offline Installation Guide
 
-This guide explains how to install SudaPy on a Windows machine without internet access.
+How to install SudaPy on a machine without internet access.
 
-## Overview
+---
 
-The strategy is:
+## Option 1: Portable Windows Bundle (Recommended)
 
-1. On a machine **with** internet, download all wheel files into a local folder (a "wheelhouse").
-2. Copy that folder to the offline machine via USB drive, shared folder, etc.
-3. Install from the wheelhouse using `pip install --no-index`.
+The simplest offline method. No Python, pip, or conda needed on the target machine.
 
-## Step 1: Build the wheelhouse (on a connected machine)
+1. On a connected machine, download **SudaPy-Windows-x64.zip** from the [latest release](https://github.com/Osman-Geomatics93/sudapy/releases/latest)
+2. Copy the zip to the offline machine via USB drive, network share, etc.
+3. Extract to a short path, e.g. `C:\SudaPy`
+4. Open Command Prompt and run:
 
-Make sure you have Python 3.9+ and pip installed.
-
-```bash
-# Clone or download the SudaPy source
-cd sudapy
-
-# Run the wheelhouse builder script
-python scripts/build_wheelhouse.py --out wheelhouse/
+```bat
+cd C:\SudaPy
+scripts\sudapy_doctor.bat
+scripts\run_sudapy.bat crs suggest --lon 32.5 --lat 15.6
 ```
 
-This downloads SudaPy and all its dependencies as `.whl` files into the `wheelhouse/` folder.
+The bundle includes Python, GDAL, PROJ, GEOS, and all dependencies. Nothing else to install.
 
-Alternatively, build manually:
+---
+
+## Option 2: pip Wheelhouse (Core-Only)
+
+For pip-only installs without geospatial extras. Requires Python 3.9+ on the target machine.
+
+### On a connected machine
 
 ```bash
-pip download "sudapy[all]" --dest wheelhouse/
-# Or from the local source:
-pip wheel . --wheel-dir wheelhouse/ --no-deps
-pip download -r requirements-offline.txt --dest wheelhouse/
+# Download SudaPy and all core dependencies as wheel files
+pip download sudapy --dest wheelhouse/
 ```
 
-## Step 2: Transfer to the offline machine
+### Transfer
 
-Copy the entire `wheelhouse/` folder and the SudaPy source to the target machine. Use a USB drive, network share, or any other transfer method.
+Copy the `wheelhouse/` folder to the offline machine via USB drive or network share.
 
-## Step 3: Install on the offline machine
-
-```bash
-# Install SudaPy and all dependencies from the wheelhouse
-pip install --no-index --find-links wheelhouse/ sudapy
-
-# Or with extras
-pip install --no-index --find-links wheelhouse/ "sudapy[all]"
-```
-
-## Alternative: conda/mamba approach
-
-If you prefer conda, the geospatial stack can be pre-packaged:
+### On the offline machine
 
 ```bash
-# On the connected machine:
-conda create -n sudapy python=3.11 geopandas rasterio fiona pyproj -c conda-forge
-conda activate sudapy
-
-# Export the environment
-conda list --explicit > spec-file.txt
-
-# On the offline machine (after transferring the conda packages):
-conda create -n sudapy --file spec-file.txt --offline
-conda activate sudapy
 pip install --no-index --find-links wheelhouse/ sudapy
 ```
 
-### Tradeoffs: pip wheelhouse vs. conda
+> **Note:** This method only supports the core package (`pip install sudapy`). The `[geo]` extra requires compiled C libraries (GDAL, PROJ, GEOS) that cannot be reliably installed from wheels on Windows. Use Option 1 for full geospatial support offline.
 
-| Aspect | pip wheelhouse | conda |
+---
+
+## Comparison
+
+| Aspect | Portable Bundle | pip Wheelhouse |
 |---|---|---|
-| Binary deps (GDAL) | May need pre-built wheels or build tools | Handles binary deps natively |
-| Package size | Smaller (Python-only wheels) | Larger (includes C libraries) |
-| Setup complexity | Simpler for pure Python | More steps but more reliable for geospatial |
-| Reproducibility | Good with pinned versions | Excellent with explicit spec files |
+| Geospatial support | Full (GDAL, rasterio, fiona, geopandas) | Core only (CRS, CLI) |
+| Target requirements | Windows 10/11, 64-bit | Python 3.9+ |
+| Download size | ~600 MB | ~20 MB |
+| Setup steps | Extract zip, run | pip install from folder |
 
-**Recommendation for Sudan/Windows users:** Use conda to install the geospatial binary dependencies (GDAL, rasterio, fiona), then use a pip wheelhouse for SudaPy itself. This gives the most reliable experience on Windows without needing a C compiler.
+**Recommendation:** Use the portable bundle for Windows machines that need geospatial functionality. Use the wheelhouse for lightweight core-only installs or non-Windows systems.
+
+---
 
 ## Troubleshooting
 
 - **"No matching distribution found"**: Ensure the wheelhouse was built for the same Python version and OS as the target machine.
-- **GDAL/rasterio build errors**: Use conda for geospatial deps, then pip for SudaPy.
+- **Bundle "Cannot find bundled Python"**: Extract the full zip to a short path (e.g. `C:\SudaPy`).
 - **Permission errors on Windows**: Run the terminal as Administrator, or use `--user` flag with pip.
