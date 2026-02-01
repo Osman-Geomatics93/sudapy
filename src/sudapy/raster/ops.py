@@ -41,7 +41,7 @@ def clip(
         Path to the output raster.
     """
     rasterio = require_extra("rasterio", "geo")
-    import rasterio.mask
+    from rasterio import mask as rasterio_mask
 
     from sudapy.vector.ops import _read as read_vector
 
@@ -60,7 +60,7 @@ def clip(
         geometries = mask_gdf.geometry.values
         nd = nodata if nodata is not None else ds.nodata
 
-        out_image, out_transform = rasterio.mask.mask(
+        out_image, out_transform = rasterio_mask.mask(
             ds, geometries, crop=crop, nodata=nd,
         )
         out_meta = ds.meta.copy()

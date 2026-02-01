@@ -8,7 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Union
 
-from sudapy.core.errors import DependencyError, FileFormatError, check_import, require_extra
+from sudapy.core.errors import FileFormatError, check_import, require_extra
 from sudapy.core.logging import get_logger
 
 logger = get_logger(__name__)

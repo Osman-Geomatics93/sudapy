@@ -6,7 +6,7 @@ import warnings
 
 import geopandas as gpd
 import pytest
-from shapely.geometry import Point, Polygon, box
+from shapely.geometry import Polygon, box
 
 from sudapy.vector.ops import (
     buffer,

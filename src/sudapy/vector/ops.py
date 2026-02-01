@@ -8,9 +8,12 @@ from __future__ import annotations
 
 import warnings
 from pathlib import Path
-from typing import Union
+from typing import TYPE_CHECKING, Union
 
 from sudapy.core.errors import CRSError, FileFormatError, SudaPyError, require_extra
+
+if TYPE_CHECKING:
+    import geopandas as gpd
 from sudapy.core.logging import get_logger
 from sudapy.crs.registry import validate_epsg
 

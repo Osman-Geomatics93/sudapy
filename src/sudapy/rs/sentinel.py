@@ -73,8 +73,6 @@ def search_scenes(
     Returns:
         List of dicts with keys: ``uuid``, ``title``, ``date``, ``cloud_cover``.
     """
-    from sentinelsat import geojson_to_wkt, read_geojson
-
     api = _get_api()
 
     # Create a small point footprint

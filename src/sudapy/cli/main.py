@@ -9,7 +9,6 @@ import os
 import platform
 import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -164,9 +163,10 @@ def doctor() -> None:
 
     # GeoPackage read/write (only if geo deps available)
     try:
+        import tempfile
+
         import geopandas as gpd
         from shapely.geometry import Point
-        import tempfile
 
         gdf = gpd.GeoDataFrame({"val": [1]}, geometry=[Point(0, 0)], crs="EPSG:4326")
         with tempfile.NamedTemporaryFile(suffix=".gpkg", delete=False) as tmp:
@@ -324,11 +324,11 @@ def batch(
     ),
     input_dir: Path = typer.Option(..., "--in", help="Input directory with vector files."),
     output_dir: Path = typer.Option(..., "--out", help="Output directory."),
-    to: Optional[int] = typer.Option(None, "--to", help="Target EPSG (for reproject)."),
-    clip_path: Optional[Path] = typer.Option(None, "--clip", help="Clip geometry file."),
-    distance: Optional[float] = typer.Option(None, "--distance", help="Buffer distance in meters."),
+    to: int | None = typer.Option(None, "--to", help="Target EPSG (for reproject)."),
+    clip_path: Path | None = typer.Option(None, "--clip", help="Clip geometry file."),
+    distance: float | None = typer.Option(None, "--distance", help="Buffer distance in meters."),
     field: str = typer.Option("area_m2", "--field", help="Field name (for area)."),
-    tolerance: Optional[float] = typer.Option(None, "--tolerance", help="Simplify tolerance in meters."),
+    tolerance: float | None = typer.Option(None, "--tolerance", help="Simplify tolerance in meters."),
 ) -> None:
     """Run an operation on all vector files in a directory."""
     from sudapy.vector import ops as vops
